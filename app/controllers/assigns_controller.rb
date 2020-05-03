@@ -3,12 +3,16 @@ class AssignsController < ApplicationController
 
   def create
     team = Team.friendly.find(params[:team_id])
-    user = email_reliable?(assign_params) ? User.find_or_create_by_email(assign_params) : nil
-    if user
-      team.invite_member(user)
-      redirect_to team_url(team), notice: I18n.t('views.messages.assigned')
+    if User.where(email: assign_params).any?
+         user = email_reliable?(assign_params) ? User.find_or_create_by_email(assign_params) : nil
+         if user
+           team.invite_member(user)
+           redirect_to team_url(team), notice: I18n.t('views.messages.assigned')
+         else
+           redirect_to team_url(team), notice: I18n.t('views.messages.failed_to_assign')
+         end
     else
-      redirect_to team_url(team), notice: I18n.t('views.messages.failed_to_assign')
+      redirect_to team_url(team), notice: I18n.t('views.messages.enter_proper_user')
     end
   end
 
@@ -37,11 +41,11 @@ class AssignsController < ApplicationController
       I18n.t('views.messages.cannot_delete_member_4_some_reason')
     end
   end
-  
+
   def email_reliable?(address)
     address.match(/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i)
   end
-  
+
   def set_next_team(assign, assigned_user)
     another_team = Assign.find_by(user_id: assigned_user.id).team
     change_keep_team(assigned_user, another_team) if assigned_user.keep_team_id == assign.team_id
