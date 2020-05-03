@@ -205,6 +205,8 @@ ja:
     pm: 午後
   views:
     messages:
+      only_team_owner: 'チームオーナーのみがその操作を実行できます'
+      enter_proper_user: '入力したユーザーは存在しません'
       create_agenda: 'アジェンダ作成に成功しました！'
       create_article: '記事作成に成功しました！'
       update_article: '記事更新に成功しました！'

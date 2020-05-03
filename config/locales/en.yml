@@ -215,6 +215,8 @@ en:
     pm: pm
   views:
     messages:
+      only_team_owner: 'Only the theam owner can perform that'
+      enter_proper_user: 'The user you entered doesnt exist'
       create_agenda: 'Successfully created an agenda!'
       create_article: 'Successfully created an article!'
       update_article: 'Successfully updated the article!'
