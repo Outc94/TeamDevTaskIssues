@@ -30,13 +30,16 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <% @working_team.agendas.each do |agenda| %>
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link">
+            <div class="nav-link bg-secondary">
               <i class="fa fa-circle-o nav-icon"></i>
               <p>
                 <%= agenda.title %>
+                <% if current_user.id == @working_team.owner_id || current_user.id == agenda.user_id %>
+                  <%= link_to I18n.t('views.button.delete'), agenda, method: :delete, data: { confirm: 'Are you sure you want to delete this agenda?' }%>
+                <%end%>
                 <i class="right fa fa-angle-left"></i>
               </p>
-            </a>
+            </div>
             <ul class="nav nav-treeview" style="display: block;">
               <% agenda.articles.each do |article| %>
                 <li class="nav-item">
